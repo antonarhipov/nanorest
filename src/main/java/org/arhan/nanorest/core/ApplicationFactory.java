@@ -9,7 +9,7 @@ import java.util.*;
 public class ApplicationFactory {
 
   public static Application createApplication(String packageToScan) {
-    Application application = new Application();
+    Application application = new Application(packageToScan);
     try {
       Class[] classes = getClasses(packageToScan);
       registerPages(classes, application);
@@ -20,15 +20,28 @@ public class ApplicationFactory {
     return application;
   }
 
+  public static void updateApplication(Application app) {
+    try {
+      Class[] classes = getClasses(app.getPackageToScan());
+      registerPages(classes, app);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   private static void registerPages(Class[] classes, Application application) throws InstantiationException, IllegalAccessException {
     for (Class clazz : classes) {
       if (clazz.isAnnotationPresent(Page.class)) {
-        @SuppressWarnings({"unchecked"})
-        Page pageAnnotation = (Page) clazz.getAnnotation(Page.class);
-        Map<String, Method> actions = getActions(clazz);
-        application.addPage(pageAnnotation.path(), clazz.newInstance(), actions);
+        updateClassMetaInfo(application, clazz);
       }
     }
+  }
+
+  protected static void updateClassMetaInfo(Application application, Class<?> clazz) throws InstantiationException,
+      IllegalAccessException {
+    Page pageAnnotation = (Page) clazz.getAnnotation(Page.class);
+    Map<String, Method> actions = getActions(clazz);
+    application.addPage(pageAnnotation.path(), clazz.newInstance(), actions);
   }
 
   private static Map<String, Method> getActions(Class clazz) {
