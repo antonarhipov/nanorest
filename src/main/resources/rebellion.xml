@@ -1,0 +1,5 @@
+<rebellion>
+	<trooper class="org.arhan.nanorest.core.Application">
+		<forceLazyReload beforeMethod="invokePageAction" selectClasses="getPageClasses()" />
+	</trooper>
+</rebellion>
