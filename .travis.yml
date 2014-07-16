@@ -1,1 +1,7 @@
 language: java
+script: mvn -U install 
+jdk:
+- openjdk7
+branches:
+  only:
+  - master
