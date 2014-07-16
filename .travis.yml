@@ -5,4 +5,4 @@ branches:
   only:
   - master
 before_install: 'mvn -version'
-install: 'mvn -U -B -e clean deploy -DskipTests'
+install: 'mvn -U -B -e clean install -DskipTests'
