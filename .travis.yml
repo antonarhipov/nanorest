@@ -1,7 +1,8 @@
 language: java
-script: mvn -U install 
 jdk:
 - openjdk7
 branches:
   only:
   - master
+before_install: 'mvn -version'
+install: 'mvn -U -B -e clean deploy -DskipTests'

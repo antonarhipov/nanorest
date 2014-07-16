@@ -46,7 +46,63 @@
 				<target>1.6</target>
 			</configuration>
 		</plugin>
-	</plugins>
+        <plugin>
+            <groupId>org.jfrog.buildinfo</groupId>
+            <artifactId>artifactory-maven-plugin</artifactId>
+            <version>2.2.2</version>
+            <inherited>false</inherited>
+            <executions>
+                <execution>
+                    <id>build-info</id>
+                    <goals>
+                        <goal>publish</goal>
+                    </goals>
+                    <configuration>
+                        <deployProperties>
+                            <gradle>awesome</gradle>
+                        </deployProperties>
+                        <artifactory>
+                            <includeEnvVars>true</includeEnvVars>
+                            <timeoutSec>60</timeoutSec>
+                            <propertiesFile>publish.properties</propertiesFile>
+                        </artifactory>
+                        <publisher>
+                            <contextUrl>https://oss.jfrog.org</contextUrl>
+                            <username>deployer</username>
+                            <password>...</password>
+                            <repoKey>libs-releases-local</repoKey>
+                            <snapshotRepoKey>libs-snapshots-local</snapshotRepoKey>
+                        </publisher>
+                        <buildInfo>
+                            <buildNumber>{{DRONE_BUILD_NUMBER|TRAVIS_BUILD_NUMBER|CI_BUILD_NUMBER|BUILD_NUMBER}}
+                            </buildNumber>
+                            <buildUrl>{{DRONE_BUILD_URL|CI_BUILD_URL|BUILD_URL}}</buildUrl>
+                        </buildInfo>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
   </build>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray-plugins</name>
+            <url>http://jcenter.bintray.com</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
