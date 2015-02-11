@@ -8,19 +8,7 @@
   <artifactId>nanorest</artifactId>
   <version>1.0</version>
 
-  <repositories>
-  	<repository>
-	    <id>jitpack.io</id>
-	    <url>https://jitpack.io</url>
-	</repository>
-  </repositories>
-
   <dependencies>
-    <dependency>
-	    <groupId>com.github.antonarhipov</groupId>
-	    <artifactId>nanorest</artifactId>
-	    <version>0.1</version>
-    </dependency>
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
